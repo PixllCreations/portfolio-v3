@@ -18,6 +18,8 @@ import {
   Vector3,
 } from "three";
 import ProjectsSection from "./projects-section";
+import Image from "next/image";
+import Link from "next/link";
 
 interface NeuronNode {
   id: string;
@@ -108,10 +110,7 @@ function DetailedNeuron({
         const pulse = Math.sin(state.clock.elapsedTime * 2) * 0.1 + 1;
         groupRef.current.scale.setScalar(scale * pulse);
       } else {
-        groupRef.current.scale.lerp(
-          new Vector3(scale, scale, scale).multiplyScalar(hovered ? 1.1 : 1),
-          0.1,
-        );
+        groupRef.current.scale.lerp(new Vector3(scale, scale, scale).multiplyScalar(hovered ? 1.1 : 1), 0.1);
       }
     }
   });
@@ -519,8 +518,7 @@ export default function NeuronNavigation() {
           <div className="space-y-4">
             <h1 className="text-4xl font-bold text-primary">Welcome</h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Full-Stack Software Developer specializing in cutting-edge web technologies and
-              immersive 3D experiences.
+              Full-Stack Software Developer specializing in cutting-edge web technologies and immersive 3D experiences.
             </p>
             <div className="flex gap-3 pt-4">
               <button
@@ -550,7 +548,7 @@ export default function NeuronNavigation() {
               <div className="relative">
                 <div className="absolute inset-0 bg-linear-to-br from-primary to-accent rounded-full blur-md opacity-50"></div>
                 <img
-                  src="/professional-developer-portrait.png"
+                  src="/hero.png"
                   alt="Profile"
                   className="relative w-32 h-32 rounded-full object-cover border-4 border-primary/50 shadow-2xl"
                 />
@@ -563,11 +561,10 @@ export default function NeuronNavigation() {
               </h2>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              Passionate developer with expertise in React, Next.js, Three.js, and modern web
-              technologies. I create immersive digital experiences that push the boundaries of
-              what's possible on the web.
+              Passionate developer with expertise in React, Next.js, Three.js, and modern web technologies. I create
+              immersive digital experiences that push the boundaries of what's possible on the web.
             </p>
-            <div className="grid grid-cols-2 gap-4 pt-4">
+            {/* <div className="grid grid-cols-2 gap-4 pt-4">
               <div className="space-y-2">
                 <h3 className="font-semibold text-foreground">Experience</h3>
                 <p className="text-sm text-muted-foreground">5+ Years</p>
@@ -576,7 +573,7 @@ export default function NeuronNavigation() {
                 <h3 className="font-semibold text-foreground">Projects</h3>
                 <p className="text-sm text-muted-foreground">50+ Completed</p>
               </div>
-            </div>
+            </div> */}
           </div>
         ),
       },
@@ -675,30 +672,69 @@ export default function NeuronNavigation() {
             </p>
             <div className="space-y-3 pt-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-primary">📧</span>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white">
+                  <span className="text-primary">
+                    <Image
+                      src="/email.svg"
+                      alt="Email"
+                      width={30}
+                      height={30}
+                      onClick={() => window.open("mailto:eddie@edwardscott.dev", "_blank", "noopener,noreferrer")}
+                    />
+                  </span>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Email</p>
-                  <p className="text-sm text-muted-foreground">hello@developer.com</p>
+                  <Link
+                    href="mailto:eddie@edwardscott.dev"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    eddie@edwardscott.dev{" "}
+                  </Link>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-primary">💼</span>
+                  <span className="text-primary">
+                    <Image
+                      src="/linkedin.svg"
+                      alt="LinkedIn"
+                      width={30}
+                      height={30}
+                      onClick={() =>
+                        window.open("https://www.linkedin.com/in/eddiscott", "_blank", "noopener,noreferrer")
+                      }
+                    />
+                  </span>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">LinkedIn</p>
-                  <p className="text-sm text-muted-foreground">linkedin.com/in/developer</p>
+                  <Link
+                    href="https://www.linkedin.com/in/eddiscott"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    linkedin.com/in/eddiscott
+                  </Link>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-primary">🐙</span>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white">
+                  <span className="text-primary">
+                    <Image
+                      src="/github.svg"
+                      alt="GitHub"
+                      width={30}
+                      height={30}
+                      className="bg-transparent"
+                      onClick={() => window.open("https://github.com/pixllcreations", "_blank", "noopener,noreferrer")}
+                    />
+                  </span>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">GitHub</p>
-                  <p className="text-sm text-muted-foreground">github.com/developer</p>
+                  <Link
+                    href="https://github.com/pixllcreations"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    github.com/pixllcreations
+                  </Link>
                 </div>
               </div>
             </div>
