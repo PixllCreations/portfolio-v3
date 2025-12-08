@@ -4,7 +4,7 @@ import type React from "react";
 
 import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { Html, Environment, PerspectiveCamera, OrbitControls } from "@react-three/drei";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import {
   BufferGeometry,
   CatmullRomCurve3,
@@ -505,6 +505,30 @@ function NeuronScene({
 
 export default function NeuronNavigation() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
+  const [webglError, setWebglError] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Check if WebGL is available
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (!gl) {
+        setWebglError(true);
+      }
+    } catch (e) {
+      setWebglError(true);
+    }
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="fixed inset-0 bg-linear-to-b from-background via-background/95 to-primary/5 flex items-center justify-center">
+        <div className="text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
 
   const nodes: NeuronNode[] = useMemo(
     () => [
@@ -568,9 +592,69 @@ export default function NeuronNavigation() {
     [],
   );
 
+  if (webglError) {
+    // Fallback UI when WebGL is not available
+    return (
+      <div className="fixed inset-0 bg-linear-to-b from-background via-background/95 to-primary/5 flex items-center justify-center">
+        <div className="max-w-4xl mx-auto px-4 space-y-8">
+          <div className="text-center space-y-4">
+            <h1 className="text-4xl font-bold text-primary">Portfolio</h1>
+            <p className="text-muted-foreground">
+              WebGL is not available in your browser. Please use a modern browser with WebGL support.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {nodes.map((node) => (
+              <div
+                key={node.id}
+                className="bg-background/80 backdrop-blur-md p-6 rounded-lg border border-primary/30 cursor-pointer hover:bg-background/90 transition-colors"
+                onClick={() => setActiveNode(node.id)}
+              >
+                <h2
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: node.color }}
+                >
+                  {node.label}
+                </h2>
+              </div>
+            ))}
+          </div>
+          {activeNode && (
+            <div className="fixed inset-0 bg-background/90 backdrop-blur-xl flex items-center justify-center z-50 p-4">
+              <div className="bg-background/90 backdrop-blur-xl p-8 rounded-2xl border-2 border-primary/40 shadow-2xl max-w-2xl max-h-[80vh] overflow-y-auto relative">
+                <button
+                  onClick={() => setActiveNode(null)}
+                  className="absolute top-4 right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
+                  aria-label="Close"
+                  type="button"
+                >
+                  <span className="text-primary-foreground text-2xl font-light leading-none pointer-events-none">
+                    ×
+                  </span>
+                </button>
+                {nodes.find((n) => n.id === activeNode)?.content}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-linear-to-b from-background via-background/95 to-primary/5">
-      <Canvas>
+      <Canvas
+        onError={(error) => {
+          console.error("Canvas error:", error);
+          setWebglError(true);
+        }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+          failIfMajorPerformanceCaveat: false,
+        }}
+      >
         <NeuronScene
           nodes={nodes}
           activeNode={activeNode}
