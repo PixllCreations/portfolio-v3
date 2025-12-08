@@ -436,29 +436,27 @@ function NeuronScene({
             scale={activeNode === node.id ? 1.5 : 1}
           />
 
-          <Html
-            position={[node.position[0], node.position[1] + 1.2, node.position[2]]}
-            center
-          >
-            <div
-              className={`pointer-events-none transition-all duration-300 ${
-                activeNode === node.id
-                  ? "opacity-100 scale-110"
-                  : activeNode
-                  ? "opacity-0 scale-90"
-                  : "opacity-60 scale-100"
-              }`}
+          {!activeNode && (
+            <Html
+              position={[node.position[0], node.position[1] + 1.2, node.position[2]]}
+              center
             >
-              <div className="bg-background/80 backdrop-blur-md px-4 py-2 rounded-lg border border-primary/30 shadow-2xl">
-                <p
-                  className="text-foreground font-bold text-sm whitespace-nowrap tracking-wider"
-                  style={{ color: node.color }}
-                >
-                  {node.label.toUpperCase()}
-                </p>
+              <div
+                className={`pointer-events-none transition-all duration-300 ${
+                  activeNode === node.id ? "opacity-100 scale-110" : "opacity-60 scale-100"
+                }`}
+              >
+                <div className="bg-background/80 backdrop-blur-md px-4 py-2 rounded-lg border border-primary/30 shadow-2xl">
+                  <p
+                    className="text-foreground font-bold text-sm whitespace-nowrap tracking-wider"
+                    style={{ color: node.color }}
+                  >
+                    {node.label.toUpperCase()}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Html>
+            </Html>
+          )}
 
           {activeNode === node.id && (
             <Html
