@@ -28,7 +28,7 @@ export default function SkillsSection({ color = "#10b981" }: SkillsSectionProps)
         <div className="space-y-2">
           <h3 className="font-semibold text-foreground text-sm">Backend</h3>
           <div className="flex flex-wrap gap-2">
-            {["Node.js", "PostgreSQL", "MongoDB", "Redis"].map((skill) => (
+            {["Node.js", "PostgreSQL", "MongoDB", "Redis", "Go", "Java", "C", "Python"].map((skill) => (
               <span
                 key={skill}
                 className="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs"
