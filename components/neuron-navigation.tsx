@@ -18,8 +18,9 @@ import {
   Vector3,
 } from "three";
 import ProjectsSection from "./projects-section";
-import Image from "next/image";
-import Link from "next/link";
+import AboutSection from "./about-section";
+import SkillsSection from "./skills-section";
+import ContactSection from "./contact-section";
 
 interface NeuronNode {
   id: string;
@@ -542,40 +543,7 @@ export default function NeuronNavigation() {
         position: [-4, 2, -2],
         label: "About",
         color: "#8b5cf6",
-        content: (
-          <div className="space-y-4">
-            <div className="flex flex-col items-center gap-4 mb-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-linear-to-br from-primary to-accent rounded-full blur-md opacity-50"></div>
-                <img
-                  src="/hero.png"
-                  alt="Profile"
-                  className="relative w-32 h-32 rounded-full object-cover border-4 border-primary/50 shadow-2xl"
-                />
-              </div>
-              <h2
-                className="text-3xl font-bold"
-                style={{ color: "#8b5cf6" }}
-              >
-                About Me
-              </h2>
-            </div>
-            <p className="text-muted-foreground leading-relaxed">
-              Passionate developer with expertise in React, Next.js, Three.js, and modern web technologies. I create
-              immersive digital experiences that push the boundaries of what's possible on the web.
-            </p>
-            {/* <div className="grid grid-cols-2 gap-4 pt-4">
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Experience</h3>
-                <p className="text-sm text-muted-foreground">5+ Years</p>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Projects</h3>
-                <p className="text-sm text-muted-foreground">50+ Completed</p>
-              </div>
-            </div> */}
-          </div>
-        ),
+        content: <AboutSection color="#8b5cf6" />,
       },
       {
         id: "projects",
@@ -589,157 +557,14 @@ export default function NeuronNavigation() {
         position: [-3, -2, 1],
         label: "Skills",
         color: "#10b981",
-        content: (
-          <div className="space-y-4">
-            <h2
-              className="text-3xl font-bold"
-              style={{ color: "#10b981" }}
-            >
-              Technical Skills
-            </h2>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground text-sm">Frontend</h3>
-                <div className="flex flex-wrap gap-2">
-                  {["React", "Next.js", "Three.js", "TypeScript"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground text-sm">Backend</h3>
-                <div className="flex flex-wrap gap-2">
-                  {["Node.js", "PostgreSQL", "MongoDB", "Redis"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground text-sm">3D & Graphics</h3>
-                <div className="flex flex-wrap gap-2">
-                  {["Three.js", "R3F", "WebGL", "Blender"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground text-sm">Tools</h3>
-                <div className="flex flex-wrap gap-2">
-                  {["Git", "Docker", "AWS", "Vercel"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        ),
+        content: <SkillsSection color="#10b981" />,
       },
       {
         id: "contact",
         position: [3, -1, 2],
         label: "Contact",
         color: "#f59e0b",
-        content: (
-          <div className="space-y-4">
-            <h2
-              className="text-3xl font-bold"
-              style={{ color: "#f59e0b" }}
-            >
-              Get In Touch
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              Interested in working together? Let's connect and discuss your next project.
-            </p>
-            <div className="space-y-3 pt-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white">
-                  <span className="text-primary">
-                    <Image
-                      src="/email.svg"
-                      alt="Email"
-                      width={30}
-                      height={30}
-                      onClick={() => window.open("mailto:eddie@edwardscott.dev", "_blank", "noopener,noreferrer")}
-                    />
-                  </span>
-                </div>
-                <div>
-                  <Link
-                    href="mailto:eddie@edwardscott.dev"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    eddie@edwardscott.dev{" "}
-                  </Link>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-primary">
-                    <Image
-                      src="/linkedin.svg"
-                      alt="LinkedIn"
-                      width={30}
-                      height={30}
-                      onClick={() =>
-                        window.open("https://www.linkedin.com/in/eddiscott", "_blank", "noopener,noreferrer")
-                      }
-                    />
-                  </span>
-                </div>
-                <div>
-                  <Link
-                    href="https://www.linkedin.com/in/eddiscott"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    linkedin.com/in/eddiscott
-                  </Link>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white">
-                  <span className="text-primary">
-                    <Image
-                      src="/github.svg"
-                      alt="GitHub"
-                      width={30}
-                      height={30}
-                      className="bg-transparent"
-                      onClick={() => window.open("https://github.com/pixllcreations", "_blank", "noopener,noreferrer")}
-                    />
-                  </span>
-                </div>
-                <div>
-                  <Link
-                    href="https://github.com/pixllcreations"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    github.com/pixllcreations
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        ),
+        content: <ContactSection color="#f59e0b" />,
       },
     ],
     [],
