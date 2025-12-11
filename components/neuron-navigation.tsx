@@ -508,28 +508,7 @@ export default function NeuronNavigation() {
   const [webglError, setWebglError] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    // Check if WebGL is available
-    try {
-      const canvas = document.createElement("canvas");
-      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-      if (!gl) {
-        setWebglError(true);
-      }
-    } catch (e) {
-      setWebglError(true);
-    }
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="fixed inset-0 bg-linear-to-b from-background via-background/95 to-primary/5 flex items-center justify-center">
-        <div className="text-muted-foreground">Loading...</div>
-      </div>
-    );
-  }
-
+  // Nodes are defined here to maintain hook order
   const nodes: NeuronNode[] = useMemo(
     () => [
       {
@@ -591,6 +570,28 @@ export default function NeuronNavigation() {
     ],
     [],
   );
+
+  useEffect(() => {
+    setMounted(true);
+    // Check if WebGL is available
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (!gl) {
+        setWebglError(true);
+      }
+    } catch (e) {
+      setWebglError(true);
+    }
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="fixed inset-0 bg-linear-to-b from-background via-background/95 to-primary/5 flex items-center justify-center">
+        <div className="text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
 
   if (webglError) {
     // Fallback UI when WebGL is not available
