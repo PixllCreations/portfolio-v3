@@ -463,38 +463,40 @@ function NeuronScene({
               position={[0, 0, 0]}
               center
               style={{
-                width: "100%",
+                width: "calc(100vw - 2rem)",
                 maxWidth: "600px",
                 position: "fixed",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 pointerEvents: "auto",
-                padding: "1rem",
+                boxSizing: "border-box",
               }}
               zIndexRange={[1000, 0]}
               distanceFactor={10}
             >
-              <div className="pointer-events-auto animate-in fade-in slide-in-from-bottom-4 duration-500 w-full">
-                <div className="bg-background/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl max-h-[85vh] sm:max-h-[70vh] overflow-y-auto relative w-full">
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setActiveNode(null);
-                    }}
-                    onMouseDown={(e) => {
-                      e.stopPropagation();
-                    }}
-                    className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
-                    aria-label="Close"
-                    type="button"
-                  >
-                    <span className="text-primary-foreground text-xl sm:text-2xl font-light leading-none pointer-events-none">
-                      ×
-                    </span>
-                  </button>
-                  {node.content}
+              <div className="pointer-events-auto animate-in fade-in slide-in-from-bottom-4 duration-500 w-full h-full">
+                <div className="bg-background/90 backdrop-blur-xl p-3 sm:p-4 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl max-h-[90vh] sm:max-h-[70vh] overflow-y-auto overflow-x-hidden relative w-full box-border">
+                  <div className="w-full min-w-0 overflow-x-hidden">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setActiveNode(null);
+                      }}
+                      onMouseDown={(e) => {
+                        e.stopPropagation();
+                      }}
+                      className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
+                      aria-label="Close"
+                      type="button"
+                    >
+                      <span className="text-primary-foreground text-xl sm:text-2xl font-light leading-none pointer-events-none">
+                        ×
+                      </span>
+                    </button>
+                    <div className="w-full min-w-0 overflow-x-hidden">{node.content}</div>
+                  </div>
                 </div>
               </div>
             </Html>
@@ -681,7 +683,7 @@ export default function NeuronNavigation() {
           </div>
           {activeNode && (
             <div className="fixed inset-0 bg-background/90 backdrop-blur-xl flex items-center justify-center z-50 p-2 sm:p-4">
-              <div className="bg-background/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl w-full max-w-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto relative">
+              <div className="bg-background/90 backdrop-blur-xl p-3 sm:p-4 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl w-full max-w-[calc(100vw-1rem)] sm:max-w-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto overflow-x-hidden relative box-border">
                 <button
                   onClick={() => setActiveNode(null)}
                   className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
@@ -692,7 +694,9 @@ export default function NeuronNavigation() {
                     ×
                   </span>
                 </button>
-                {nodes.find((n) => n.id === activeNode)?.content}
+                <div className="w-full min-w-0 overflow-x-hidden">
+                  {nodes.find((n) => n.id === activeNode)?.content}
+                </div>
               </div>
             </div>
           )}

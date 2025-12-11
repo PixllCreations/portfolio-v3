@@ -20,7 +20,7 @@ export default function ProjectsSection() {
   return (
     <div className="space-y-4">
       <h2
-        className="text-3xl font-bold"
+        className="text-2xl sm:text-3xl font-bold"
         style={{ color: "#06b6d4" }}
       >
         Featured Projects

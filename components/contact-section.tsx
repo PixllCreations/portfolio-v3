@@ -11,7 +11,7 @@ export default function ContactSection({ color = "#f59e0b" }: ContactSectionProp
   return (
     <div className="space-y-4">
       <h2
-        className="text-3xl font-bold"
+        className="text-2xl sm:text-3xl font-bold"
         style={{ color }}
       >
         Get In Touch

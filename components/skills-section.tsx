@@ -6,12 +6,12 @@ export default function SkillsSection({ color = "#10b981" }: SkillsSectionProps)
   return (
     <div className="space-y-4">
       <h2
-        className="text-3xl font-bold"
+        className="text-2xl sm:text-3xl font-bold"
         style={{ color }}
       >
         Technical Skills
       </h2>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-2">
           <h3 className="font-semibold text-foreground text-sm">Frontend</h3>
           <div className="flex flex-wrap gap-2">

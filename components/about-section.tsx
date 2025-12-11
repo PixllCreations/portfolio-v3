@@ -17,7 +17,7 @@ export default function AboutSection({ color = "#8b5cf6" }: AboutSectionProps) {
           />
         </div>
         <h2
-          className="text-3xl font-bold"
+          className="text-2xl sm:text-3xl font-bold"
           style={{ color }}
         >
           About Me
