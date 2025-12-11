@@ -463,18 +463,20 @@ function NeuronScene({
               position={[0, 0, 0]}
               center
               style={{
-                width: "600px",
+                width: "100%",
+                maxWidth: "600px",
                 position: "fixed",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 pointerEvents: "auto",
+                padding: "1rem",
               }}
               zIndexRange={[1000, 0]}
               distanceFactor={10}
             >
-              <div className="pointer-events-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="bg-background/90 backdrop-blur-xl p-8 rounded-2xl border-2 border-primary/40 shadow-2xl max-h-[70vh] overflow-y-auto relative">
+              <div className="pointer-events-auto animate-in fade-in slide-in-from-bottom-4 duration-500 w-full">
+                <div className="bg-background/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl max-h-[85vh] sm:max-h-[70vh] overflow-y-auto relative w-full">
                   <button
                     onClick={(e) => {
                       e.preventDefault();
@@ -484,11 +486,11 @@ function NeuronScene({
                     onMouseDown={(e) => {
                       e.stopPropagation();
                     }}
-                    className="absolute top-4 right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
+                    className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
                     aria-label="Close"
                     type="button"
                   >
-                    <span className="text-primary-foreground text-2xl font-light leading-none pointer-events-none">
+                    <span className="text-primary-foreground text-xl sm:text-2xl font-light leading-none pointer-events-none">
                       ×
                     </span>
                   </button>
@@ -596,12 +598,69 @@ export default function NeuronNavigation() {
   if (webglError) {
     // Fallback UI when WebGL is not available
     return (
-      <div className="fixed inset-0 bg-linear-to-b from-background via-background/95 to-primary/5 flex items-center justify-center">
-        <div className="max-w-4xl mx-auto px-4 space-y-8">
+      <div className="fixed inset-0 bg-linear-to-b from-background via-background/95 to-primary/5 flex items-center justify-center p-4">
+        {/* WebGL Error Modal */}
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-background border-2 border-primary/40 rounded-xl sm:rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 relative">
+            <div className="text-center space-y-3">
+              <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-8 h-8 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-primary">WebGL Not Available</h2>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                Your browser doesn't support WebGL, which is required for the 3D experience.
+              </p>
+            </div>
+
+            <div className="space-y-3 pt-2">
+              <div className="bg-primary/10 rounded-lg p-4 space-y-2">
+                <h3 className="font-semibold text-foreground text-sm">Try these solutions:</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                  <li>Enable hardware acceleration in your browser settings</li>
+                  <li>Update your graphics drivers</li>
+                  <li>Use a modern browser (Chrome, Firefox, Edge, or Safari)</li>
+                  <li>Check if WebGL is disabled in your browser flags</li>
+                </ul>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                <button
+                  onClick={() => {
+                    // Try to reload and check again
+                    window.location.reload();
+                  }}
+                  className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+                >
+                  Reload Page
+                </button>
+                <button
+                  onClick={() => setWebglError(false)}
+                  className="flex-1 px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors font-medium"
+                >
+                  Continue Anyway
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 space-y-8 w-full">
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-primary">Portfolio</h1>
             <p className="text-muted-foreground">
-              WebGL is not available in your browser. Please use a modern browser with WebGL support.
+              Full-Stack Software Developer specializing in cutting-edge web technologies and immersive 3D experiences.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -621,15 +680,15 @@ export default function NeuronNavigation() {
             ))}
           </div>
           {activeNode && (
-            <div className="fixed inset-0 bg-background/90 backdrop-blur-xl flex items-center justify-center z-50 p-4">
-              <div className="bg-background/90 backdrop-blur-xl p-8 rounded-2xl border-2 border-primary/40 shadow-2xl max-w-2xl max-h-[80vh] overflow-y-auto relative">
+            <div className="fixed inset-0 bg-background/90 backdrop-blur-xl flex items-center justify-center z-50 p-2 sm:p-4">
+              <div className="bg-background/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl w-full max-w-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto relative">
                 <button
                   onClick={() => setActiveNode(null)}
-                  className="absolute top-4 right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
+                  className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
                   aria-label="Close"
                   type="button"
                 >
-                  <span className="text-primary-foreground text-2xl font-light leading-none pointer-events-none">
+                  <span className="text-primary-foreground text-xl sm:text-2xl font-light leading-none pointer-events-none">
                     ×
                   </span>
                 </button>
