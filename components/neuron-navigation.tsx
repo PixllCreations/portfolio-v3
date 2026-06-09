@@ -21,6 +21,7 @@ import ProjectsSection from "./projects-section";
 import AboutSection from "./about-section";
 import SkillsSection from "./skills-section";
 import ContactSection from "./contact-section";
+import HeroSection from "./hero-section";
 
 interface NeuronNode {
   id: string;
@@ -111,7 +112,10 @@ function DetailedNeuron({
         const pulse = Math.sin(state.clock.elapsedTime * 2) * 0.1 + 1;
         groupRef.current.scale.setScalar(scale * pulse);
       } else {
-        groupRef.current.scale.lerp(new Vector3(scale, scale, scale).multiplyScalar(hovered ? 1.1 : 1), 0.1);
+        groupRef.current.scale.lerp(
+          new Vector3(scale, scale, scale).multiplyScalar(hovered ? 1.1 : 1),
+          0.1,
+        );
       }
     }
   });
@@ -323,7 +327,7 @@ function CameraController({
       } else {
         // Animation complete - re-enable controls
         isAnimating.current = false;
-        if (controlsRef.current) {
+        if (controlsRef.current && !activeNode) {
           controlsRef.current.enabled = true;
         }
       }
@@ -343,6 +347,11 @@ function NeuronScene({
   setActiveNode: (id: string | null) => void;
 }) {
   const controlsRef = useRef<any>(null);
+  const modalIsOpen = activeNode !== null;
+
+  const stopModalWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+  };
 
   const connections = useMemo(() => {
     const conns: Array<{
@@ -383,6 +392,8 @@ function NeuronScene({
       />
       <OrbitControls
         ref={controlsRef}
+        enabled={!modalIsOpen}
+        enableZoom={!modalIsOpen}
         enableDamping
         dampingFactor={0.05}
         minDistance={3}
@@ -476,7 +487,10 @@ function NeuronScene({
               distanceFactor={10}
             >
               <div className="pointer-events-auto animate-in fade-in slide-in-from-bottom-4 duration-500 w-full h-full">
-                <div className="bg-background/90 backdrop-blur-xl p-3 sm:p-4 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl max-h-[90vh] sm:max-h-[70vh] overflow-y-auto overflow-x-hidden relative w-full box-border">
+                <div
+                  className="scrollbar-hidden bg-background/90 backdrop-blur-xl p-3 sm:p-4 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl max-h-[90vh] sm:max-h-[70vh] overflow-y-auto overscroll-contain overflow-x-hidden relative w-full box-border"
+                  onWheel={stopModalWheel}
+                >
                   <div className="w-full min-w-0 overflow-x-hidden">
                     <button
                       onClick={(e) => {
@@ -520,28 +534,7 @@ export default function NeuronNavigation() {
         position: [0, 0, 0],
         label: "Home",
         color: "#6366f1",
-        content: (
-          <div className="space-y-4">
-            <h1 className="text-4xl font-bold text-primary">Welcome</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Full-Stack Software Developer specializing in cutting-edge web technologies and immersive 3D experiences.
-            </p>
-            <div className="flex gap-3 pt-4">
-              <button
-                onClick={() => setActiveNode("projects")}
-                className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-              >
-                View Projects
-              </button>
-              <button
-                onClick={() => setActiveNode("contact")}
-                className="px-6 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors"
-              >
-                Get in Touch
-              </button>
-            </div>
-          </div>
-        ),
+        content: HeroSection({ setActiveNode }),
       },
       {
         id: "about",
@@ -662,7 +655,8 @@ export default function NeuronNavigation() {
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-primary">Portfolio</h1>
             <p className="text-muted-foreground">
-              Full-Stack Software Developer specializing in cutting-edge web technologies and immersive 3D experiences.
+              Full-Stack Software Developer specializing in cutting-edge web technologies and
+              immersive 3D experiences.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -683,7 +677,7 @@ export default function NeuronNavigation() {
           </div>
           {activeNode && (
             <div className="fixed inset-0 bg-background/90 backdrop-blur-xl flex items-center justify-center z-50 p-2 sm:p-4">
-              <div className="bg-background/90 backdrop-blur-xl p-3 sm:p-4 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl w-full max-w-[calc(100vw-1rem)] sm:max-w-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto overflow-x-hidden relative box-border">
+              <div className="scrollbar-hidden bg-background/90 backdrop-blur-xl p-3 sm:p-4 md:p-8 rounded-xl sm:rounded-2xl border-2 border-primary/40 shadow-2xl w-full max-w-[calc(100vw-1rem)] sm:max-w-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto overscroll-contain overflow-x-hidden relative box-border">
                 <button
                   onClick={() => setActiveNode(null)}
                   className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 bg-primary text-primary-foreground rounded-lg hover:bg-primary/30 flex items-center justify-center transition-colors z-50 cursor-pointer"
@@ -729,7 +723,7 @@ export default function NeuronNavigation() {
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 pointer-events-none">
         <div className="bg-background/80 backdrop-blur-md px-6 py-3 rounded-full border border-primary/30 shadow-xl">
           <p className="text-sm text-muted-foreground text-center">
-            Click on neurons to navigate • Drag to rotate view
+            Click on a node to navigate • Drag to rotate view
           </p>
         </div>
       </div>

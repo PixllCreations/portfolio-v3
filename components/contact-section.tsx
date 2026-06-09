@@ -23,7 +23,9 @@ export default function ContactSection({ color = "#f59e0b" }: ContactSectionProp
         <div className="flex items-center gap-3">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center bg-white cursor-pointer hover:scale-110 hover:bg-primary/10 transition-all duration-200"
-            onClick={() => window.open("mailto:eddie@edwardscott.dev", "_blank", "noopener,noreferrer")}
+            onClick={() =>
+              window.open("mailto:eddie@edwardscott.dev", "_blank", "noopener,noreferrer")
+            }
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
@@ -53,12 +55,18 @@ export default function ContactSection({ color = "#f59e0b" }: ContactSectionProp
         <div className="flex items-center gap-3">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center bg-white cursor-pointer hover:scale-110 hover:bg-primary/10 transition-all duration-200"
-            onClick={() => window.open("https://www.linkedin.com/in/eddiscott", "_blank", "noopener,noreferrer")}
+            onClick={() =>
+              window.open("https://www.linkedin.com/in/eddiscott", "_blank", "noopener,noreferrer")
+            }
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
-                window.open("https://www.linkedin.com/in/eddiscott", "_blank", "noopener,noreferrer");
+                window.open(
+                  "https://www.linkedin.com/in/eddiscott",
+                  "_blank",
+                  "noopener,noreferrer",
+                );
               }
             }}
           >
@@ -84,7 +92,9 @@ export default function ContactSection({ color = "#f59e0b" }: ContactSectionProp
         <div className="flex items-center gap-3">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center bg-white cursor-pointer hover:scale-110 hover:bg-primary/10 transition-all duration-200"
-            onClick={() => window.open("https://github.com/pixllcreations", "_blank", "noopener,noreferrer")}
+            onClick={() =>
+              window.open("https://github.com/pixllcreations", "_blank", "noopener,noreferrer")
+            }
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {

@@ -1,30 +1,37 @@
-import { Button } from "@/components/ui/button"
-import { ArrowDown } from "lucide-react"
+import { Button } from "@/components/ui/button";
 
-export default function HeroSection() {
+export interface HeroSectionProps {
+  setActiveNode: (node: string) => void;
+}
+
+export default function HeroSection({ setActiveNode }: HeroSectionProps) {
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center px-4">
-      <div className="max-w-4xl mx-auto text-center space-y-6">
-        <div className="space-y-4">
-          <h1 className="text-5xl md:text-7xl font-bold text-balance">Full Stack Developer</h1>
-          <p className="text-xl md:text-2xl text-muted-foreground text-balance">
-            Crafting innovative digital experiences with modern technologies
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-          <Button size="lg" className="text-lg px-8">
-            View My Work
-          </Button>
-          <Button size="lg" variant="outline" className="text-lg px-8 bg-transparent">
-            Get In Touch
-          </Button>
-        </div>
-
-        <div className="pt-16 animate-bounce">
-          <ArrowDown className="w-8 h-8 mx-auto text-muted-foreground" />
-        </div>
+    <div className="space-y-4">
+      <h1 className="text-4xl font-bold text-primary">Welcome</h1>
+      <p className="text-lg text-muted-foreground leading-relaxed">
+        Full-Stack Software Developer specializing in building practical systems.
+      </p>
+      <p className="text-lg text-muted-foreground leading-relaxed">
+        I build production-oriented software with Go, TypeScript, React, and Node.js — from Discord
+        automation and backend services to full-stack dashboards, API integrations, and event-driven
+        tools that solve real operational problems.{" "}
+      </p>
+      <div className="flex gap-3 pt-4">
+        <Button
+          variant="default"
+          onClick={() => setActiveNode("projects")}
+          className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors cursor-pointer"
+        >
+          View Projects
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => setActiveNode("contact")}
+          className="px-6 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors cursor-pointer"
+        >
+          Get in Touch
+        </Button>
       </div>
-    </section>
-  )
+    </div>
+  );
 }
