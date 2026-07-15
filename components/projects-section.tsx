@@ -8,13 +8,13 @@ import Image from "next/image";
 
 const projects = [
   {
-    title: "Bullet Heaven Game",
+    title: "Atlas",
     description:
-      "A high-performance bullet heaven roguelike game built with Go and Ebitengine. Features wave-based enemy spawning, player progression, auto-targeting weapons, and cross-platform support (Desktop, Web, iOS, Android).",
-    tags: ["Go", "Ebitengine", "WebAssembly", "Game Development"],
+      "Atlas is a self-hosted, config-driven Kubernetes PaaS that turns a repo’s atlas.yaml into a deployment plan and reconciles it into per-project namespaces. Connecting a GitHub App triggers clone, Kaniko builds, dependency provisioning (like Redis), and Kubernetes rollouts, while an embedded React console exposes deploy phases plus live build and runtime logs.",
+    tags: ["Go", "Kubernetes", "React", "PostgreSQL", "GitHub Apps"],
     image: "",
-    demo: "/game",
-    code: "https://github.com/PixllCreations/bullets-go",
+    demo: "",
+    code: "https://github.com/PixllCreations/Atlas",
   },
   {
     title: "Aegis",
@@ -31,10 +31,23 @@ const projects = [
       "We Know Ball is a live NBA tracking web application that surfaces scores, standings, team details, rosters, schedules, game summaries, and box score data through a polished React frontend. The app uses ESPN’s public NBA endpoints through a reusable API layer, making the data layer easier to extend and maintain.",
     tags: ["React", "Next.js", "Tailwind CSS", "TypeScript", "Go"],
     image: "",
-    demo: "",
+    demo: "https://we-know-ball.edwardscott.dev",
     code: "https://github.com/PixllCreations/we-know-ball",
   },
+  {
+    title: "Bullet Heaven Game",
+    description:
+      "A high-performance bullet heaven roguelike game built with Go and Ebitengine. Features wave-based enemy spawning, player progression, auto-targeting weapons, and cross-platform support (Desktop, Web, iOS, Android).",
+    tags: ["Go", "Ebitengine", "WebAssembly", "Game Development"],
+    image: "",
+    demo: "/game",
+    code: "https://github.com/PixllCreations/bullets-go",
+  },
 ];
+
+function isInternalDemo(demo: string) {
+  return demo.startsWith("/");
+}
 
 export default function ProjectsSection() {
   return (
@@ -66,10 +79,21 @@ export default function ProjectsSection() {
                   asChild
                   size="sm"
                 >
-                  <Link href={project.demo}>
-                    <ExternalLink />
-                    Demo
-                  </Link>
+                  {isInternalDemo(project.demo) ? (
+                    <Link href={project.demo}>
+                      <ExternalLink />
+                      Demo
+                    </Link>
+                  ) : (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ExternalLink />
+                      Demo
+                    </a>
+                  )}
                 </Button>
               )}
               {project.code && (
